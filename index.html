@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <title>Phantom Ink: Match Heist</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Permanent+Marker&family=Righteous&family=Bangers&display=swap" rel="stylesheet">
+    <style>
+      /* Custom Animations */
+      @keyframes popIn {
+        0% { transform: scale(0); opacity: 0; }
+        60% { transform: scale(1.2); opacity: 1; }
+        100% { transform: scale(1); }
+      }
+      @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-4px) rotate(-5deg); }
+        75% { transform: translateX(4px) rotate(5deg); }
+      }
+      @keyframes floatUpFade {
+        0% { transform: translateY(0) scale(1) rotate(0deg); opacity: 1; text-shadow: 2px 2px 0px #000; }
+        100% { transform: translateY(-50px) scale(1.5) rotate(-10deg); opacity: 0; }
+      }
+      @keyframes noise {
+        0% { transform: translate(0,0) }
+        10% { transform: translate(-5%,-5%) }
+        20% { transform: translate(-10%,5%) }
+        30% { transform: translate(5%,-10%) }
+        40% { transform: translate(-5%,15%) }
+        50% { transform: translate(-10%,5%) }
+        60% { transform: translate(15%,0) }
+        70% { transform: translate(0,10%) }
+        80% { transform: translate(-15%,0) }
+        90% { transform: translate(10%,5%) }
+        100% { transform: translate(5%,0) }
+      }
+      @keyframes flyParticle {
+        0% { transform: translate(0, 0) scale(1) rotate(0deg); opacity: 1; }
+        100% { transform: translate(var(--tx), var(--ty)) scale(0) rotate(var(--r)); opacity: 0; }
+      }
+      @keyframes wiggle {
+        0%, 100% { transform: rotate(-3deg); }
+        50% { transform: rotate(3deg); }
+      }
+
+      .animate-pop { animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+      .animate-shake { animation: shake 0.4s ease-in-out; }
+      .animate-float-out { animation: floatUpFade 0.8s ease-out forwards; }
+      .animate-particle { animation: flyParticle 0.6s cubic-bezier(0, 0.9, 0.57, 1) forwards; }
+      .animate-wiggle { animation: wiggle 0.5s ease-in-out infinite; }
+      
+      body {
+        background-color: #0f0f0f;
+        touch-action: none;
+        overflow: hidden;
+        color: white;
+      }
+
+      /* CRT Scanline Effect */
+      .scanlines {
+        background: linear-gradient(
+          to bottom,
+          rgba(255,255,255,0),
+          rgba(255,255,255,0) 50%,
+          rgba(0,0,0,0.1) 50%,
+          rgba(0,0,0,0.1)
+        );
+        background-size: 100% 4px;
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        pointer-events: none;
+        z-index: 999;
+      }
+      
+      /* Vignette */
+      .vignette {
+        position: fixed;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: radial-gradient(circle, rgba(0,0,0,0) 50%, rgba(0,0,0,0.8) 100%);
+        pointer-events: none;
+        z-index: 998;
+      }
+
+      /* Noise Grain */
+      .bg-noise {
+        position: fixed;
+        top: -50%; left: -50%; right: -50%; bottom: -50%;
+        width: 200%; height: 200vh;
+        background: transparent url('http://assets.iceable.com/img/noise-transparent.png') repeat 0 0;
+        background-repeat: repeat;
+        animation: noise .2s infinite;
+        opacity: 0.05;
+        visibility: visible;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      /* Halftone Pattern */
+      .bg-halftone {
+        background-image: radial-gradient(#222 20%, transparent 20%), radial-gradient(#111 20%, transparent 20%);
+        background-color: #1a1a1a;
+        background-position: 0 0, 10px 10px;
+        background-size: 20px 20px;
+      }
+    </style>
+  <script type="importmap">
+{
+  "imports": {
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "react": "https://aistudiocdn.com/react@^19.2.0",
+    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+    "vite": "https://aistudiocdn.com/vite@^7.2.4",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
+  }
+}
+</script>
+<link rel="stylesheet" href="/index.css">
+</head>
+  <body>
+    <div id="root"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div class="bg-noise"></div>
+    <script type="module" src="./index.tsx"></script>
+  <script type="module" src="/index.tsx"></script>
+</body>
+</html>
